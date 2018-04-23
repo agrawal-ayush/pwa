@@ -1,45 +1,49 @@
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin')
-
-const srcDir = resolve(__dirname, 'src');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
-  entry: `${srcDir}/index.js`,
+  context: resolve(__dirname, 'src'),
+  entry: {
+    app: `./index.js`,
+    vendor: ['react','react-dom','react-router']
+  },
   output: {
-    filename: 'bundle.js',
+    path: resolve(__dirname, 'dist'),
+    filename: '[name]-[chunkhash:6].js',
     publicPath: '/'
   },
   module: {
     rules: [{
-      enforce: 'pre',
-      test: /\.js$/,
-      loader: 'standard-loader',
-      exclude: /node_modules/
-    }, {
       test: /\.js$/,
       loader: "babel-loader",
       exclude: /node_modules/
     }, {
       test: /\.css$/,
-      use: [{
-        loader: 'style-loader'
-      }, {
-        loader: 'css-loader',
-        options: {
-          modules: true,
-          localIdentName: '[name]-[local]-[hash:base64:6]',
-          camelCase: true
-        }
-      }]
+      use: ExtractTextPlugin.extract(['css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]",camelCase'])
     }]
   },
-  devtool: 'inline-source-map',
-  mode: 'development',
+  performance: {
+    hints: "error"
+  },
+  devtool: 'source-map',
+  mode: 'production',
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      template: `${srcDir}/index.html`
-    })
-  ]
+      template: `./index.html`
+    }),
+    new ExtractTextPlugin({
+      filename: '[name].[chunkhash:6].css'
+    }),
+  ],
+  resolve: {
+    alias: {
+      "react": "preact-compat",
+      "react-dom": "preact-compat"
+    }
+  }
 
 };
