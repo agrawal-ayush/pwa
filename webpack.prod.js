@@ -38,12 +38,5 @@ module.exports = {
     new ExtractTextPlugin({
       filename: '[name].[chunkhash:6].css'
     }),
-  ],
-  resolve: {
-    alias: {
-      "react": "preact-compat",
-      "react-dom": "preact-compat"
-    }
-  }
-
+  ]
 };
