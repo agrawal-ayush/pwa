@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const OfflinePlugin = require('offline-plugin')
 
 module.exports = {
   context: resolve(__dirname, 'src'),
@@ -38,5 +39,6 @@ module.exports = {
     new ExtractTextPlugin({
       filename: '[name].[chunkhash:6].css'
     }),
+    new OfflinePlugin()
   ]
 };
