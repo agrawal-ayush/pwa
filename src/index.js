@@ -7,6 +7,6 @@ import { install } from 'offline-plugin/runtime'
 
 render(<App />, document.getElementById('app'))
 
-if(process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === 'production') {
   install()
 }

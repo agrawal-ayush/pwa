@@ -10,7 +10,7 @@ const Post = (props) => (
         ? <Link className={styles.link} to={`/post/${props.slug}`}>{props.title}</Link>
         : props.title}
     </h2>
-    <p className={styles.content}>{props.excerpt}</p>
+    <p className={styles.content}>{props.body}</p>
   </div>
 )
 
